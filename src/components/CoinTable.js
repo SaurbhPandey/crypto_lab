@@ -20,12 +20,13 @@ const CoinPage = () => {
   const { currency ,symbol} = useContext(Crypto);
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [search, setSearch] = useState();
+  // const [search, setSearch] = useState("");
   const[pagination , setPagination] = useState(1);
+  const[allList , setAllList] = useState();
   const coinFetchList = async () => {
     setLoading(true);
     const { data } = await axios.get(CoinList(currency));
-
+    setAllList(data);
     setList(data);
     setLoading(false);
   }
@@ -66,13 +67,25 @@ const CoinPage = () => {
   }));
   const classes = useStyles();
 
-  const handleSearch = () => {
-    return list.filter(
+  // const handleSearch = () => {
+  //   return list.filter(
+  //     (coin) =>
+  //       coin.name.toLowerCase().includes(search) ||
+  //       coin.symbol.toLowerCase().includes(search)
+  //   );
+  // };
+  const handleChange = (e)=>{
+    // setSearch(e.target.value);
+    // console.log(e.target.value)
+    // console.log(search)
+    console.log(e);
+    const data = allList.filter(
       (coin) =>
-        coin.name.toLowerCase().includes(search) ||
-        coin.symbol.toLowerCase().includes(search)
+        coin.name?.toLowerCase().includes(e.target.value) ||
+        coin.symbol?.toLowerCase().includes(e.target.value)
     );
-  };
+    setList(data);
+  }
   const navigate = useNavigate();
   return (
     <ThemeProvider theme={darkTheme}>
@@ -98,7 +111,8 @@ const CoinPage = () => {
             width: "100%",
             color: "white"
           }} className={classes.inputBase}
-            onChange={(e) => setSearch(e.target.value)}
+            // onChange={(e) => setSearch(e.target.value)}
+            onChange={handleChange}
           />
 
         </Box>
@@ -125,7 +139,15 @@ const CoinPage = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {handleSearch().slice((pagination-1)*10,(pagination-1)*10+10).map((row) => {
+                  {list.length == 0 ? <Typography
+          variant="h4"
+          style={{ margin: 18, fontFamily: "Montserrat", color: "white" , display:"flex" , alignItems:"center",
+        marginTop:20 , justifyContent:"center" }}
+
+        >
+          The Coin Name You Enter Is Not Present
+
+        </Typography>: list.slice((pagination-1)*10,(pagination-1)*10+10).map((row) => {
                     const profit = row.price_change_percentage_24h > 0;
                     return (
                       <TableRow
@@ -199,7 +221,11 @@ const CoinPage = () => {
           display:"flex",
           justifyContent : "center"
         }}
-        count={(handleSearch()?.length / 10).toFixed(0)}/>
+        count={(allList?.length / 10).toFixed(0)}
+        onChange={(_,value)=>{
+          setPagination(value);
+          window.scroll(0,450);
+        }}/>
       </Container>
     </ThemeProvider>
   )
