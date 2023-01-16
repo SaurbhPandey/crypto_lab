@@ -89,13 +89,12 @@ const CoinPage = () => {
     // console.log(e.target.value)
     // console.log(search)
     // console.log(e);
-    const data = allList.filter(
+    setList(allList.filter(
       (coin) =>
         coin.name?.toLowerCase().includes(e.target.value) ||
         coin.symbol?.toLowerCase().includes(e.target.value)
-    );
-    // console.log(data);
-    setList(data);
+    ));
+    // console.log(data););
   };
   const navigate = useNavigate();
   return (
