@@ -36,7 +36,7 @@ const Banner = () => {
         fontWeight : "bold",
          marginBottom: 15,
      }}>
-      Crypto Hunter
+      Crypto Lab
      </Typography>
      <Typography variant='subtitle2' style={{
        color:"darkgray",

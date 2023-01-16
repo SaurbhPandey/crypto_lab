@@ -50,7 +50,7 @@ const Header = () => {
                 fontFamily:"Montserrat",
                 fontWeight:"bold"
                 }}>
-                Crypto Hunter</Typography>
+                Crypto Lab</Typography>
               <Select variant='outlined'
                 style={{
                   width: 100,
