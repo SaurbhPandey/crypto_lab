@@ -88,7 +88,7 @@ const CoinInfo = (coin) => {
           />
         ) : (
           <>
-             <div style={{padding:'2%', alignText:'center', width:"80%"}}>
+             <div style={{padding:'2%', alignText:'center', width:"90%"}}>
             <Line
               data={{
                 labels:historicData.map((coin)=>{
